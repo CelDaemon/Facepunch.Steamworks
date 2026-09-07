@@ -142,6 +142,10 @@ namespace Steamworks
 				return val;
 
 			val = Internal.GetDigitalActionHandle( name );
+
+			if ( val == 0 )
+				throw new NullReferenceException( $"No digital action found with name {name}" );
+
 			DigitalHandles.Add( name, val );
 			return val;
 		}
@@ -153,6 +157,10 @@ namespace Steamworks
 				return val;
 
 			val = Internal.GetAnalogActionHandle( name );
+
+			if ( val == 0 )
+				throw new NullReferenceException( $"No analog action found with name {name}" );
+
 			AnalogHandles.Add( name, val );
 			return val;
 		}
@@ -164,6 +172,10 @@ namespace Steamworks
 				return val;
 
 			val = Internal.GetActionSetHandle( name );
+
+			if ( val == 0 )
+				throw new NullReferenceException( $"No action set found with name {name}" );
+
 			ActionSets.Add( name, val );
 			return val;
 		}
