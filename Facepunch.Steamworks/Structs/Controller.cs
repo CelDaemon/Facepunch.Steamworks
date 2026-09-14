@@ -14,7 +14,16 @@ namespace Steamworks
 		}
 
 		public ulong Id => Handle.Value;
-		public InputType InputType => SteamInput.Internal.GetInputTypeForHandle( Handle );
+		public InputType InputType
+		{
+			get
+			{
+				if ( this == default )
+					return default;
+
+				return SteamInput.Internal.GetInputTypeForHandle( Handle );
+			}
+		}
 
 		/// <summary>
 		/// Reconfigure the controller to use the specified action set (ie 'Menu', 'Walk' or 'Drive')
@@ -23,12 +32,36 @@ namespace Steamworks
 		/// </summary>
 		public string ActionSet
 		{
-			set => SteamInput.Internal.ActivateActionSet( Handle, SteamInput.GetActionSetHandle( value ) );
+			set
+			{
+				if ( this == default )
+					return;
+
+				SteamInput.Internal.ActivateActionSet( Handle, SteamInput.GetActionSetHandle( value ) );
+			}
 		}
 
-		public void DeactivateLayer( string layer ) => SteamInput.Internal.DeactivateActionSetLayer( Handle, SteamInput.GetActionSetHandle( layer ) );
-		public void ActivateLayer( string layer ) => SteamInput.Internal.ActivateActionSetLayer( Handle, SteamInput.GetActionSetHandle( layer ) );
-		public void ClearLayers() => SteamInput.Internal.DeactivateAllActionSetLayers( Handle );
+		public void DeactivateLayer( string layer )
+		{
+			if ( this == default )
+				return;
+
+			SteamInput.Internal.DeactivateActionSetLayer( Handle, SteamInput.GetActionSetHandle( layer ) );
+		}
+		public void ActivateLayer( string layer )
+		{
+			if ( this == default )
+				return;
+
+			SteamInput.Internal.ActivateActionSetLayer( Handle, SteamInput.GetActionSetHandle( layer ) );
+		}
+		public void ClearLayers()
+		{
+			if ( this == default )
+				return;
+
+			SteamInput.Internal.DeactivateAllActionSetLayers( Handle );
+		}
 
 
 		/// <summary>
@@ -36,6 +69,9 @@ namespace Steamworks
 		/// </summary>
 		public DigitalState GetDigitalState( string actionName )
 		{
+			if ( this == default )
+				return default;
+
 			return SteamInput.Internal.GetDigitalActionData( Handle, SteamInput.GetDigitalActionHandle( actionName ) );
 		}
 
@@ -44,6 +80,9 @@ namespace Steamworks
 		/// </summary>
 		public AnalogState GetAnalogState( string actionName )
 		{
+			if ( this == default )
+				return default;
+
 			return SteamInput.Internal.GetAnalogActionData( Handle, SteamInput.GetAnalogActionHandle( actionName ) );
 		}
 
